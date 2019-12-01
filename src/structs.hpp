@@ -5,7 +5,7 @@
 
 struct Piece
 {
-    Piece(Color color, Rank rank) :
+    Piece(Color const color, Rank const rank) :
         color(color),
         rank(rank)
     {}
@@ -16,12 +16,12 @@ struct Piece
 
 struct Coordinate
 {
-    Coordinate(int8_t x, int8_t y) :
+    Coordinate(int8_t const x, int8_t const y) :
         x(x),
         y(y)
     {}
 
-    Coordinate(int8_t x, int8_t y, Direction dir) :
+    Coordinate(int8_t const x, int8_t const y, Direction const dir) :
         x(x),
         y(y),
         dir(dir)
@@ -61,7 +61,7 @@ struct Coordinate
         return true;
     }
 
-    bool const operator==(const Coordinate& other) const
+    bool const operator==(Coordinate const& other) const
     {
         return (x == other.x && y == other.y);
     }
@@ -69,11 +69,11 @@ struct Coordinate
 
 struct Move
 {
-    Move(uint8_t sx, uint8_t sy, uint8_t dx, uint8_t dy) :
+    Move(uint8_t const sx, uint8_t const sy, uint8_t const dx, uint8_t const dy) :
         src(sx, sy),
         des(dx, dy)
     {}
-    Move(Coordinate src, Coordinate des) :
+    Move(Coordinate const& src, Coordinate const& des) :
         src(src),
         des(des)
     {}
@@ -83,7 +83,7 @@ struct Move
 
 struct Tile
 {
-    Tile(Coordinate c, Color col) : coord(c), color(col) {}
+    Tile(Coordinate const& c, Color const& col) : coord(c), color(col) {}
     std::unique_ptr<Piece> pieceOnTop;
     Coordinate coord;
     Color color;

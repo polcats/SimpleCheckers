@@ -19,12 +19,12 @@ public:
         board.showBoard();
     }
 
-    void movePiece(Move m)
+    void movePiece(Move const& m)
     {
         board.movePiece(m);
     }
 
-    void removePiece(Coordinate c)
+    void removePiece(Coordinate const& c)
     {
         board.removePiece(c);
     }
@@ -34,7 +34,7 @@ public:
         return board.getMoves(c);
     }
 
-    void setPiece(Coordinate c, Color color, Rank rank)
+    void setPiece(Coordinate const&c, Color const& color, Rank const& rank)
     {
  		board.setPiece(c, color, rank);
     }

@@ -12,7 +12,7 @@ constexpr uint8_t WHITE_END = 8;
 class Board
 {
 public:
-    Board(Character* image) : image(image), tiles()
+    Board(Character* const image) : image(image), tiles()
     {
     	set();
     }
@@ -74,7 +74,7 @@ public:
         removedPieces.push_back(std::move(piece));
     }
 
-    void setPiece(Coordinate c, Color color, Rank rank)
+    void setPiece(Coordinate c, Color const& color, Rank const& rank)
     {
         getPiece(c) = std::make_unique<Piece>(color, rank);
     }
