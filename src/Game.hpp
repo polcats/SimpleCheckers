@@ -24,6 +24,11 @@ public:
         board.movePiece(m);
     }
 
+    std::vector<Move> getMove(Coordinate c)
+    {
+        return board.getMove(c);
+    }
+
     void setPiece(Coordinate c, Color color, Rank rank)
     {
  		board.setPiece(c, color, rank);

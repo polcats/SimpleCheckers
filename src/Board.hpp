@@ -1,7 +1,6 @@
 #pragma once
 
 #include <iostream>
-#include <memory>
 #include <vector>
 #include "Character.hpp"
 
@@ -79,6 +78,10 @@ public:
         tiles[c.x][c.y]->pieceOnTop = std::make_unique<Piece>(color, rank);
     }
 
+    std::vector<Move> getMove(Coordinate c)
+    {
+
+    }
 
 private:
     void clear()
