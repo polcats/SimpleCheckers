@@ -33,22 +33,22 @@ struct Coordinate
 
     Coordinate getTopRight()
     {
-        return Coordinate(x + 1, y - 1);
+        return Coordinate(x + 1, y - 1, TOP_RIGHT);
     }
 
     Coordinate getTopLeft()
     {
-        return Coordinate(x - 1, y - 1);
+        return Coordinate(x - 1, y - 1, TOP_LEFT);
     }
 
     Coordinate getBottomRight()
     {
-        return Coordinate(x + 1, y + 1);
+        return Coordinate(x + 1, y + 1, BOTTOM_RIGHT);
     }
 
     Coordinate getBottomLeft()
     {
-        return Coordinate(x - 1, y + 1);
+        return Coordinate(x - 1, y + 1, BOTTOM_LEFT);
     }
 
     bool isValid()
