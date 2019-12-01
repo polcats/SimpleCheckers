@@ -95,5 +95,9 @@ int main()
 	TEST_STATIC_MOVES(game);
 	TEST_ELIM_MOVES(game);
 	TEST_MOVE_LOCATIONS(game);
+	// game.movePiece(Move(0, 5, 1, 4));
 	// game.showBoard();
+	// game.movePiece(Move(3, 4, 4, 3));
+	// game.showBoard();
+
 }

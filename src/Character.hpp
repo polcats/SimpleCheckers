@@ -6,7 +6,7 @@
 class Character
 {
 public:
-    std::string const getTile(Color c) const
+    std::string const getTile(Color const& c) const
     {
         if (c)
         {
@@ -16,7 +16,7 @@ public:
         return "\u25FC";
     }
 
-    std::string const getImage(std::unique_ptr<Piece>& p) const
+    std::string const getImage(std::unique_ptr<Piece> const& p) const
     {
         Rank& rank = p->rank;
         Color& color = p->color;

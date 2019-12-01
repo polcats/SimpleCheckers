@@ -29,7 +29,7 @@ public:
         board.removePiece(c);
     }
 
-    std::vector<Move> const getMoves(Coordinate c)
+    std::vector<Move> const getMoves(Coordinate const& c)
     {
         return board.getMoves(c);
     }

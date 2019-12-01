@@ -33,7 +33,6 @@ public:
     void const showBoard() const
     {
         std::cout << "\n";
-
         for (auto y = 0u; y < 8; ++y)
         {
             for (auto x = 0u; x < 8; ++x)
@@ -57,13 +56,13 @@ public:
         }
     }
 
-    void movePiece(Move m)
+    void movePiece(Move const& m)
     {
         removePiece(m.des);
         std::swap(getPiece(m.src), getPiece(m.des));
     }
 
-    void removePiece(Coordinate c)
+    void removePiece(Coordinate const& c)
     {
         auto& piece = getPiece(c);
         if (!piece)
@@ -74,12 +73,12 @@ public:
         removedPieces.push_back(std::move(piece));
     }
 
-    void setPiece(Coordinate c, Color const& color, Rank const& rank)
+    void setPiece(Coordinate const& c, Color const& color, Rank const& rank)
     {
         getPiece(c) = std::make_unique<Piece>(color, rank);
     }
 
-    std::vector<Move> getMoves(Coordinate& origin)
+    std::vector<Move> getMoves(Coordinate const& origin)
     {
         std::vector<Move> pieceMoves {};
         auto const& currentPiece = getPiece(origin);
@@ -108,7 +107,7 @@ public:
         return pieceMoves;
     }
 
-    void addNormalMoves(std::vector<Move>& pieceMoves, Coordinate& origin, Coordinate destination, Color const color)
+    void addNormalMoves(std::vector<Move>& pieceMoves, Coordinate const& origin, Coordinate const& destination, Color const color)
     {
         if (destination.isValid()) // check if not out of bounds
         {
@@ -161,7 +160,7 @@ public:
         }
     }
 
-    std::unique_ptr<Piece>& getPiece(Coordinate& c)
+    std::unique_ptr<Piece>& getPiece(Coordinate const& c)
     {
         return tiles[c.y][c.x]->pieceOnTop;
     }
@@ -202,7 +201,7 @@ private:
         }
     }
 
-    void setPieces(const uint8_t ymin, const uint8_t ymax, Color color, Rank rank)
+    void setPieces(const uint8_t ymin, const uint8_t ymax, Color const& color, Rank const& rank)
     {
         for (auto y = ymin; y < ymax; ++y)
         {
