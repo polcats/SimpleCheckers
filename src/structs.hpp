@@ -21,6 +21,8 @@ struct Move
 {
     Move(uint8_t sx, uint8_t sy, uint8_t dx, uint8_t dy) : src(sx, sy), des(dx, dy)
     {}
+    Move(Coordinate src, Coordinate des) : src(src), des(des)
+    {}
     Coordinate src;
     Coordinate des;
 };
