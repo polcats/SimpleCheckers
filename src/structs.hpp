@@ -83,7 +83,7 @@ struct Move
 
 struct Tile
 {
-    Tile(Coordinate const& c, Color const& col) : coord(c), color(col) {}
+    Tile(Coordinate const& c, Color const col) : coord(c), color(col) {}
     std::unique_ptr<Piece> pieceOnTop;
     Coordinate coord;
     Color color;
