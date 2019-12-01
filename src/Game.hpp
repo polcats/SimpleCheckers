@@ -29,9 +29,9 @@ public:
         board.removePiece(c);
     }
 
-    std::vector<Move> getMove(Coordinate c)
+    std::vector<Move> getMoves(Coordinate c)
     {
-        return board.getMove(c);
+        return board.getMoves(c);
     }
 
     void setPiece(Coordinate c, Color color, Rank rank)
