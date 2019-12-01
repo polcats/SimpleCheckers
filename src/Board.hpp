@@ -79,39 +79,56 @@ public:
         getPiece(c) = std::make_unique<Piece>(color, rank);
     }
 
-    std::vector<Move> getMove(Coordinate c)
+    std::vector<Move> getMoves(Coordinate c)
     {
         std::vector<Move> pieceMoves {};
         auto& currentPiece = getPiece(c);
         if (!currentPiece)
         {
+            // std::cout << "\n\nNO PIECE";
             return pieceMoves;
         }
 
         if (WHITE == currentPiece->color)
         {
+            // std::cout << "\nWHITE PIECE ";
             if (NORMAL == currentPiece->rank)
             {
+                // std::cout << "NORMAL PIECE";
+                std::cout << "\n";
                 auto right = Coordinate(c.x + 1, c.y - 1);
                 if (right.x < 8 && right.y > -1)
                 {
-                    pieceMoves.push_back(Move(c, right));
+                    if (!getPiece(right)) // add if empty tile
+                    {
+                        pieceMoves.push_back(Move(c, right));
+                        // std::cout << "RIGHT: " << right.x << " " << right.y << " ";
+                    }
                 }
 
                 auto left = Coordinate(c.x - 1, c.y - 1);
                 if (left.x > -1 && left.y > -1)
                 {
-                    pieceMoves.push_back(Move(c, right));
+                    if (!getPiece(left))
+                    {
+                        pieceMoves.push_back(Move(c, left));
+                        // std::cout << "LEFT: " << left.x << " " << left.y;
+                    }
                 }
             }
         }
+        else
+        {
+            // std::cout << "\nBLACK PIECE";
+        }
+
 
         return pieceMoves;
     }
 
     std::unique_ptr<Piece>& getPiece(Coordinate c)
     {
-        return tiles[c.x][c.y]->pieceOnTop;
+        return tiles[c.y][c.x]->pieceOnTop;
     }
 
 private:
@@ -127,8 +144,8 @@ private:
         {
             for (auto y = 0u; y < 8; ++y)
             {
-                tiles[x][y] = std::make_unique<Tile>(Coordinate(x, y));
-                auto& tile = tiles[x][y];
+                tiles[y][x] = std::make_unique<Tile>(Coordinate(x, y));
+                auto& tile = tiles[y][x];
 
                 if (0 == (y % 2)) // even row
                 {
@@ -164,14 +181,14 @@ private:
             {
                 if (1 == (y % 2) && 0 == (x %2 ))
                 {
-                    setPiece(Coordinate(y, x), color, rank);
+                    setPiece(Coordinate(x, y), color, rank);
 
                     continue;
                 }
 
                 if (0 == (y % 2) && 1 == (x % 2))
                 {
-                    setPiece(Coordinate(y, x), color, rank);
+                    setPiece(Coordinate(x, y), color, rank);
                 }
             }
         }

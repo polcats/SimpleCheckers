@@ -24,6 +24,11 @@ public:
         board.movePiece(m);
     }
 
+    void removePiece(Coordinate c)
+    {
+        board.removePiece(c);
+    }
+
     std::vector<Move> getMove(Coordinate c)
     {
         return board.getMove(c);
