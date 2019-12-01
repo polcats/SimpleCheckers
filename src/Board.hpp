@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <vector>
+#include <memory>
 #include "Character.hpp"
 
 constexpr uint8_t BLACK_START = 0;
@@ -124,7 +125,7 @@ public:
                 if (TOP_LEFT == destination.dir)
                 {
                     auto const& nextMove = destination.getTopLeft();
-                    if (nextMove.isValid())
+                    if (nextMove.isValid() && !getPiece(nextMove))
                     {
                         pieceMoves.push_back(Move(origin, nextMove));
                     }
@@ -133,7 +134,7 @@ public:
                 if (TOP_RIGHT == destination.dir)
                 {
                     auto const& nextMove = destination.getTopRight();
-                    if (nextMove.isValid())
+                    if (nextMove.isValid() && !getPiece(nextMove))
                     {
                         pieceMoves.push_back(Move(origin, nextMove));
                     }
@@ -142,7 +143,7 @@ public:
                 if (BOTTOM_RIGHT == destination.dir)
                 {
                     auto const& nextMove = destination.getBottomRight();
-                    if (nextMove.isValid())
+                    if (nextMove.isValid() && !getPiece(nextMove))
                     {
                         pieceMoves.push_back(Move(origin, nextMove));
                     }
@@ -151,7 +152,7 @@ public:
                 if (BOTTOM_LEFT == destination.dir)
                 {
                     auto const& nextMove = destination.getBottomLeft();
-                    if (nextMove.isValid())
+                    if (nextMove.isValid() && !getPiece(nextMove))
                     {
                         pieceMoves.push_back(Move(origin, nextMove));
                     }
