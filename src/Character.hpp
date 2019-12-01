@@ -3,6 +3,7 @@
 #include "enums.hpp"
 #include "structs.hpp"
 
+#include <memory>
 class Character
 {
 public:
@@ -10,10 +11,10 @@ public:
     {
         if (c)
         {
-            return "\u2610";
+            return "[ ]"; //\u2610
         }
 
-        return "\u25FC";
+        return "[_]"; //\u25FC
     }
 
     std::string const getImage(std::unique_ptr<Piece> const& p) const
@@ -27,19 +28,19 @@ public:
             {
                 if (color)
                 {
-                    return "\u2688";
+                    return "(1)"; //\u2688
                 }
 
-                return "\u2686";
+                return "{1}"; //\u2686
             }
             case UPGRADED:
             {
                 if (color)
                 {
-                    return "\u2689";
+                    return "(2)"; // \u2689
                 }
 
-                return "\u2587";
+                return "{2}"; // \u2587
             }
             default:
             {
