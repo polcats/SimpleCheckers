@@ -1,16 +1,7 @@
+#pragma once
+
 #include <memory>
-
-enum Color
-{
-    BLACK,
-    WHITE
-};
-
-enum Rank
-{
-    NORMAL,
-    UPGRADED
-};
+#include "enums.hpp"
 
 struct Piece
 {
