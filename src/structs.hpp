@@ -60,6 +60,11 @@ struct Coordinate
 
         return true;
     }
+
+    bool operator==(const Coordinate& other)
+    {
+        return (x == other.x && y == other.y);
+    }
 };
 
 struct Move
