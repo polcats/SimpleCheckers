@@ -80,7 +80,13 @@ public:
 
     std::vector<Move> getMove(Coordinate c)
     {
+        std::vector<Move> pieceMoves {};
+        return pieceMoves;
+    }
 
+    std::unique_ptr<Piece>& getPiece(Coordinate c)
+    {
+        return tiles[c.x][c.y]->pieceOnTop;
     }
 
 private:
