@@ -14,7 +14,7 @@ public:
         board.set();
     }
 
-    void showBoard()
+    void const showBoard() const
     {
         board.showBoard();
     }
@@ -29,7 +29,7 @@ public:
         board.removePiece(c);
     }
 
-    std::vector<Move> getMoves(Coordinate c)
+    std::vector<Move> const getMoves(Coordinate c)
     {
         return board.getMoves(c);
     }

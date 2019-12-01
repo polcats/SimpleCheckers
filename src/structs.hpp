@@ -31,27 +31,27 @@ struct Coordinate
     int8_t y;
     Direction dir;
 
-    Coordinate getTopRight()
+    Coordinate const getTopRight() const
     {
         return Coordinate(x + 1, y - 1, TOP_RIGHT);
     }
 
-    Coordinate getTopLeft()
+    Coordinate const getTopLeft() const
     {
         return Coordinate(x - 1, y - 1, TOP_LEFT);
     }
 
-    Coordinate getBottomRight()
+    Coordinate const getBottomRight() const
     {
         return Coordinate(x + 1, y + 1, BOTTOM_RIGHT);
     }
 
-    Coordinate getBottomLeft()
+    Coordinate const getBottomLeft() const
     {
         return Coordinate(x - 1, y + 1, BOTTOM_LEFT);
     }
 
-    bool isValid()
+    bool const isValid() const
     {
         if (x > 7 || x == -1 || y > 7 || y == -1)
         {
@@ -61,7 +61,7 @@ struct Coordinate
         return true;
     }
 
-    bool operator==(const Coordinate& other)
+    bool const operator==(const Coordinate& other) const
     {
         return (x == other.x && y == other.y);
     }
@@ -83,7 +83,7 @@ struct Move
 
 struct Tile
 {
-    Tile(Coordinate c) : coord(c) {}
+    Tile(Coordinate c, Color col) : coord(c), color(col) {}
     std::unique_ptr<Piece> pieceOnTop;
     Coordinate coord;
     Color color;

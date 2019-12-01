@@ -6,7 +6,7 @@ template<typename Param>
 bool expectEQ(std::string testName, Param first, Param second)
 {
 	bool result = false;
-	// std::cout << "\n";
+	std::cout << "\n";
 	if (first == second)
 	{
 		std::cout << "Success: ";
@@ -40,21 +40,20 @@ void assertMoveLocation(Game& game, Coordinate src, std::vector<Coordinate> coor
 	{
 		for (auto i = 0u; i < actualSize; ++i)
 		{
-			std::cout << "\n";
 			expectEQ(name + "_Location", coords.at(i), moves.at(i).des);
 		}
 	}
 }
 
-void testMoveLocations(Game& game)
+void TEST_MOVE_LOCATIONS(Game& game)
 {
-	std::cout << "\n\n === testMoveLocations";
+	std::cout << "\n\n === TEST_MOVE_LOCATIONS";
 	assertMoveLocation(game, Coordinate(0, 5), std::vector<Coordinate>{{1, 4}}, "White_Normal_1_Move_Right_Location");
 }
 
-void testStaticMoves(Game& game)
+void TEST_STATIC_MOVES(Game& game)
 {
-	std::cout << "\n === testStaticMoves";
+	std::cout << "\n === TEST_STATIC_MOVES\n";
 
 	// Yea magic numbers!
 	assertMoveSize(game, Coordinate(7, 7), 0, "No_Move_No_Piece");
@@ -66,9 +65,9 @@ void testStaticMoves(Game& game)
 	assertMoveSize(game, Coordinate(0, 7), 0, "Black_Normal_0_Move_Blocked");
 }
 
-void testEliminationMoves(Game& game)
+void TEST_ELIM_MOVES(Game& game)
 {
-	std::cout << "\n\n === testEliminationMoves";
+	std::cout << "\n\n === TEST_ELIM_MOVES";
 	game.reset();
 	game.movePiece(Move(6, 5, 7, 4)); // w
 	game.movePiece(Move(7, 2, 6, 3)); // b
@@ -93,7 +92,8 @@ void testEliminationMoves(Game& game)
 int main()
 {
     Game game {};
-	testStaticMoves(game);
-	testEliminationMoves(game);
-	testMoveLocations(game);
+	TEST_STATIC_MOVES(game);
+	TEST_ELIM_MOVES(game);
+	TEST_MOVE_LOCATIONS(game);
+	// game.showBoard();
 }

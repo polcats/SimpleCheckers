@@ -30,7 +30,7 @@ public:
         setPieces(WHITE_START, WHITE_END, WHITE, NORMAL);
     }
 
-    void showBoard()
+    void const showBoard() const
     {
         std::cout << "\n";
 
@@ -79,16 +79,15 @@ public:
         getPiece(c) = std::make_unique<Piece>(color, rank);
     }
 
-    std::vector<Move> getMoves(Coordinate origin)
+    std::vector<Move> getMoves(Coordinate& origin)
     {
         std::vector<Move> pieceMoves {};
-        auto& currentPiece = getPiece(origin);
+        auto const& currentPiece = getPiece(origin);
         if (!currentPiece)
         {
-            // std::cout << "\nNO PIECE ";
             return pieceMoves;
         }
-        std::cout << "\n";
+
         if (WHITE == currentPiece->color)
         {
             if (NORMAL == currentPiece->rank)
@@ -96,59 +95,73 @@ public:
                 addNormalMoves(pieceMoves, origin, origin.getTopRight(), currentPiece->color);
                 addNormalMoves(pieceMoves, origin, origin.getTopLeft(), currentPiece->color);
             }
+
+            return pieceMoves;
         }
-        else
+
+        if (NORMAL == currentPiece->rank)
         {
-            if (NORMAL == currentPiece->rank)
-            {
-                addNormalMoves(pieceMoves, origin, origin.getBottomRight(), currentPiece->color);
-                addNormalMoves(pieceMoves, origin, origin.getBottomLeft(), currentPiece->color);
-            }
+            addNormalMoves(pieceMoves, origin, origin.getBottomRight(), currentPiece->color);
+            addNormalMoves(pieceMoves, origin, origin.getBottomLeft(), currentPiece->color);
         }
 
         return pieceMoves;
     }
 
-    void addNormalMoves(std::vector<Move>& pieceMoves, Coordinate origin, Coordinate c, Color color)
+    void addNormalMoves(std::vector<Move>& pieceMoves, Coordinate& origin, Coordinate destination, Color const color)
     {
-        if (c.isValid()) // check if not out of bounds
+        if (destination.isValid()) // check if not out of bounds
         {
-            auto& targetPiece = getPiece(c);
-            if (!targetPiece) // add if empty tile
+            auto const& targetPiece = getPiece(destination);
+
+            if (!targetPiece)  // if destination is an empty tile
             {
-                pieceMoves.push_back(Move(origin, c));
+                pieceMoves.push_back(Move(origin, destination));
+                return;
             }
 
-            if (targetPiece && color != targetPiece->color) // enemy color
+            if (targetPiece && color != targetPiece->color) // if destination has an enemy piece
             {
-                if (TOP_LEFT == c.dir)
+                if (TOP_LEFT == destination.dir)
                 {
-                    auto move = Move(origin, c.getTopLeft());
-                    pieceMoves.push_back(Move(c, c));
+                    auto const& nextMove = destination.getTopLeft();
+                    if (nextMove.isValid())
+                    {
+                        pieceMoves.push_back(Move(origin, nextMove));
+                    }
                 }
 
-                if (TOP_RIGHT == c.dir)
+                if (TOP_RIGHT == destination.dir)
                 {
-                    auto move = Move(origin, c.getTopRight());
-                    pieceMoves.push_back(Move(c, c));
+                    auto const& nextMove = destination.getTopRight();
+                    if (nextMove.isValid())
+                    {
+                        pieceMoves.push_back(Move(origin, nextMove));
+                    }
                 }
 
-                if (BOTTOM_RIGHT == c.dir)
+                if (BOTTOM_RIGHT == destination.dir)
                 {
-                    auto move = Move(origin, c.getBottomRight());
-                    pieceMoves.push_back(Move(c, c));
+                    auto const& nextMove = destination.getBottomRight();
+                    if (nextMove.isValid())
+                    {
+                        pieceMoves.push_back(Move(origin, nextMove));
+                    }
                 }
 
-                if (BOTTOM_LEFT == c.dir)
+                if (BOTTOM_LEFT == destination.dir)
                 {
-                    auto move = Move(origin, c.getBottomLeft());
-                    pieceMoves.push_back(Move(c, c));
+                    auto const& nextMove = destination.getBottomLeft();
+                    if (nextMove.isValid())
+                    {
+                        pieceMoves.push_back(Move(origin, nextMove));
+                    }
                 }
             }
         }
     }
 
-    std::unique_ptr<Piece>& getPiece(Coordinate c)
+    std::unique_ptr<Piece>& getPiece(Coordinate& c)
     {
         return tiles[c.y][c.x]->pieceOnTop;
     }
@@ -166,31 +179,25 @@ private:
         {
             for (auto y = 0u; y < 8; ++y)
             {
-                tiles[y][x] = std::make_unique<Tile>(Coordinate(x, y));
-                auto& tile = tiles[y][x];
-
                 if (0 == (y % 2)) // even row
                 {
                     if (0 == (x % 2)) // even col
                     {
-                        tile->color = WHITE;
-
+                        tiles[y][x] = std::make_unique<Tile>(Coordinate(x, y), WHITE);
                         continue;
                     }
 
-                    tile->color = BLACK;
-
+                    tiles[y][x] = std::make_unique<Tile>(Coordinate(x, y), BLACK);
                     continue;
                 }
 
                 if (0 == (x % 2))
                 {
-                    tile->color = BLACK;
-
+                    tiles[y][x] = std::make_unique<Tile>(Coordinate(x, y), BLACK);
                     continue;
                 }
 
-                tile->color = WHITE;
+                tiles[y][x] = std::make_unique<Tile>(Coordinate(x, y), WHITE);
             }
         }
     }
@@ -204,7 +211,6 @@ private:
                 if (1 == (y % 2) && 0 == (x %2 ))
                 {
                     setPiece(Coordinate(x, y), color, rank);
-
                     continue;
                 }
 
