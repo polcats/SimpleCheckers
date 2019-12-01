@@ -2,6 +2,7 @@
 
 #include <memory>
 #include "enums.hpp"
+#include "structs.hpp"
 
 class Character
 {
