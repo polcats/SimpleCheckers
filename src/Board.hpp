@@ -94,26 +94,8 @@ public:
             // std::cout << "\nWHITE PIECE ";
             if (NORMAL == currentPiece->rank)
             {
-                // std::cout << "NORMAL PIECE";
-                auto right = c.getTopRight();
-                if (right.isValid()) // check if not out of bounds
-                {
-                    if (!getPiece(right)) // add if empty tile
-                    {
-                        pieceMoves.push_back(Move(c, right));
-                        // std::cout << "RIGHT: " << right.x << " " << right.y << " ";
-                    }
-                }
-
-                auto left = c.getTopLeft();
-                if (left.isValid())
-                {
-                    if (!getPiece(left))
-                    {
-                        pieceMoves.push_back(Move(c, left));
-                        // std::cout << "LEFT: " << left.x << " " << left.y;
-                    }
-                }
+                addNormalMoves(pieceMoves, c.getTopRight());
+                addNormalMoves(pieceMoves, c.getTopLeft());
             }
         }
         else
@@ -121,29 +103,23 @@ public:
             // std::cout << "\nBLACK PIECE ";
             if (NORMAL == currentPiece->rank)
             {
-                auto right = c.getBottomRight();
-                if (right.isValid())
-                {
-                    if (!getPiece(right)) // add if empty tile
-                    {
-                        pieceMoves.push_back(Move(c, right));
-                        // std::cout << "RIGHT: " << right.x << " " << right.y << " ";
-                    }
-                }
-
-                auto left = c.getBottomLeft();
-                if (left.isValid())
-                {
-                    if (!getPiece(left))
-                    {
-                        pieceMoves.push_back(Move(c, left));
-                        // std::cout << "LEFT: " << left.x << " " << left.y;
-                    }
-                }
+                addNormalMoves(pieceMoves, c.getBottomRight());
+                addNormalMoves(pieceMoves, c.getBottomLeft());
             }
         }
 
         return pieceMoves;
+    }
+
+    void addNormalMoves(std::vector<Move>& pieceMoves, Coordinate c)
+    {
+        if (c.isValid()) // check if not out of bounds
+        {
+            if (!getPiece(c)) // add if empty tile
+            {
+                pieceMoves.push_back(Move(c, c));
+            }
+        }
     }
 
     std::unique_ptr<Piece>& getPiece(Coordinate c)
