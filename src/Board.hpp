@@ -1,7 +1,14 @@
 #pragma once
 
+#include <iostream>
 #include <memory>
+#include <vector>
 #include "Character.hpp"
+
+constexpr uint8_t BLACK_START = 0;
+constexpr uint8_t BLACK_END = 3;
+constexpr uint8_t WHITE_START = 5;
+constexpr uint8_t WHITE_END = 8;
 
 class Board
 {
