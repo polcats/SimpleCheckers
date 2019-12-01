@@ -5,34 +5,52 @@
 
 struct Piece
 {
-    Piece(Color color, Rank rank) : color(color), rank(rank) {}
+    Piece(Color color, Rank rank) :
+        color(color),
+        rank(rank)
+    {}
+
     Color color;
     Rank rank;
 };
 
 struct Coordinate
 {
-    Coordinate(int8_t x, int8_t y) : x(x), y(y) {}
+    Coordinate(int8_t x, int8_t y) :
+        x(x),
+        y(y)
+    {}
+
+    Coordinate(int8_t x, int8_t y, Direction dir) :
+        x(x),
+        y(y),
+        dir(dir)
+    {}
+
     int8_t x;
     int8_t y;
-    // bool inBounds = true;
+    Direction dir;
 
     Coordinate getTopRight()
     {
         return Coordinate(x + 1, y - 1);
     }
+
     Coordinate getTopLeft()
     {
         return Coordinate(x - 1, y - 1);
     }
+
     Coordinate getBottomRight()
     {
         return Coordinate(x + 1, y + 1);
     }
+
     Coordinate getBottomLeft()
     {
         return Coordinate(x - 1, y + 1);
     }
+
     bool isValid()
     {
         if (x > 7 || x == -1 || y > 7 || y == -1)
