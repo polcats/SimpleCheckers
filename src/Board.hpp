@@ -59,28 +59,53 @@ public:
 
     void movePiece(Move m)
     {
-        if (tiles[m.des.x][m.des.y]->pieceOnTop)
-        {
-            removePiece(m.des);
-        }
-
-        std::swap(tiles[m.src.x][m.src.y]->pieceOnTop, tiles[m.des.x][m.des.y]->pieceOnTop);
+        removePiece(m.des);
+        std::swap(getPiece(m.src), getPiece(m.des));
     }
 
     void removePiece(Coordinate c)
     {
-        auto& piece = tiles[c.x][c.y]->pieceOnTop;
+        auto& piece = getPiece(c);
+        if (!piece)
+        {
+            return;
+        }
+
         removedPieces.push_back(std::move(piece));
     }
 
     void setPiece(Coordinate c, Color color, Rank rank)
     {
-        tiles[c.x][c.y]->pieceOnTop = std::make_unique<Piece>(color, rank);
+        getPiece(c) = std::make_unique<Piece>(color, rank);
     }
 
     std::vector<Move> getMove(Coordinate c)
     {
         std::vector<Move> pieceMoves {};
+        auto& currentPiece = getPiece(c);
+        if (!currentPiece)
+        {
+            return pieceMoves;
+        }
+
+        if (WHITE == currentPiece->color)
+        {
+            if (NORMAL == currentPiece->rank)
+            {
+                auto right = Coordinate(c.x + 1, c.y - 1);
+                if (right.x < 8 && right.y > -1)
+                {
+                    pieceMoves.push_back(Move(c, right));
+                }
+
+                auto left = Coordinate(c.x - 1, c.y - 1);
+                if (left.x > -1 && left.y > -1)
+                {
+                    pieceMoves.push_back(Move(c, right));
+                }
+            }
+        }
+
         return pieceMoves;
     }
 
