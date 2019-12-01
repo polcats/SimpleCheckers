@@ -40,21 +40,15 @@ void assertMoveLocation(Game& game, Coordinate src, std::vector<Coordinate> coor
 	{
 		for (auto i = 0u; i < actualSize; ++i)
 		{
-			expectEQ(name + "_Location", coords.at(i), moves.at(i).des);
+			expectEQ(" - " + name, coords.at(i), moves.at(i).des);
+			// std::cout << "\n" << moves.at(i).des.x << ":" << moves.at(i).des.y;
 		}
 	}
 }
 
-void TEST_MOVE_LOCATIONS(Game& game)
-{
-	std::cout << "\n\n === TEST_MOVE_LOCATIONS";
-	assertMoveLocation(game, Coordinate(0, 5), std::vector<Coordinate>{{1, 4}}, "White_Normal_1_Move_Right_Location");
-}
-
 void TEST_STATIC_MOVES(Game& game)
 {
-	std::cout << "\n === TEST_STATIC_MOVES\n";
-
+	std::cout << "=== TEST_STATIC_MOVES";
 	// Yea magic numbers!
 	assertMoveSize(game, Coordinate(7, 7), 0, "No_Move_No_Piece");
 	assertMoveSize(game, Coordinate(6, 5), 2, "White_Normal_2_Moves");
@@ -89,15 +83,26 @@ void TEST_ELIM_MOVES(Game& game)
 	// game.showBoard();
 }
 
+
+void TEST_MOVE_LOCATIONS(Game& game)
+{
+	std::cout << "\n\n === TEST_MOVE_LOCATIONS";
+	game.reset();
+	assertMoveLocation(game, Coordinate(0, 5), std::vector<Coordinate>{{1, 4}}, "White_Normal_1_Move_Right_Location");
+
+	game.movePiece(Move(0, 5, 2, 3));
+	assertMoveLocation(game, Coordinate(2, 3), std::vector<Coordinate>{}, "White_Normal_0_Moves_If_Jump_Loc_Has_Piece");
+
+	game.movePiece(Move(7, 2, 5, 4));
+ 	assertMoveLocation(game, Coordinate(5, 4), std::vector<Coordinate>{}, "Black_Normal_0_Moves_If_Jump_Loc_Has_Piece");
+
+}
+
 int main()
 {
     Game game {};
 	TEST_STATIC_MOVES(game);
 	TEST_ELIM_MOVES(game);
 	TEST_MOVE_LOCATIONS(game);
-	// game.movePiece(Move(0, 5, 1, 4));
-	// game.showBoard();
-	// game.movePiece(Move(3, 4, 4, 3));
-	// game.showBoard();
-
+	game.showBoard();
 }
