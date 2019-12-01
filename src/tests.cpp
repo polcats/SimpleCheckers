@@ -16,38 +16,25 @@ void expectEQ(std::string testName, Param first, Param second)
 	std::cout << first << " == " << second << " " << testName  << "";
 }
 
+void assertMoveSize(Game& game, Coordinate c, uint8_t expectedSize, std::string name)
+{
+	auto moves = game.getMoves(c);
+	uint8_t actualSize = moves.size();
+	expectEQ(name, expectedSize, actualSize);
+}
+
 void testStaticMoves(Game& game)
 {
 	std::cout << "\n === testStaticMoves \n";
 
-	auto moves = game.getMoves(Coordinate(7, 7));
-	uint8_t expectedSize = 0;
-	uint8_t actualSize = moves.size();
-	expectEQ("No_Move_No_Piece", expectedSize, actualSize);
-
-	expectedSize = 2;
-	actualSize = game.getMoves(Coordinate(6, 5)).size();
-	expectEQ("White_Normal_2_Moves", expectedSize, actualSize);
-
-	expectedSize = 1;
-	actualSize = game.getMoves(Coordinate(0, 5)).size();
-	expectEQ("White_Normal_1_Move_Right", expectedSize, actualSize);
-
-	expectedSize = 0;
-	actualSize = game.getMoves(Coordinate(7, 6)).size();
-	expectEQ("White_Normal_0_Move_Blocked", expectedSize, actualSize);
-
-	expectedSize = 2;
-	actualSize = game.getMoves(Coordinate(1, 2)).size();
-	expectEQ("Black_Normal_2_Moves", expectedSize, actualSize);
-
-	expectedSize = 1;
-	actualSize = game.getMoves(Coordinate(7, 2)).size();
-	expectEQ("Black_Normal_1_Move_Left", expectedSize, actualSize);
-
-	expectedSize = 0;
-	actualSize = game.getMoves(Coordinate(0, 7)).size();
-	expectEQ("Black_Normal_0_Move_Blocked", expectedSize, actualSize);
+	// Yea magic numbers!
+	assertMoveSize(game, Coordinate(7, 7), 0, "No_Move_No_Piece");
+	assertMoveSize(game, Coordinate(6, 5), 2, "White_Normal_2_Moves");
+	assertMoveSize(game, Coordinate(0, 5), 1, "White_Normal_1_Move_Right");
+	assertMoveSize(game, Coordinate(7, 6), 0, "White_Normal_0_Move_Blocked");
+	assertMoveSize(game, Coordinate(1, 2), 2, "Black_Normal_2_Moves");
+	assertMoveSize(game, Coordinate(7, 2), 1, "Black_Normal_1_Move_Left");
+	assertMoveSize(game, Coordinate(0, 7), 0, "Black_Normal_0_Move_Blocked");
 }
 
 void testEliminationMoves(Game& game)

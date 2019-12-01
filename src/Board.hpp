@@ -79,10 +79,10 @@ public:
         getPiece(c) = std::make_unique<Piece>(color, rank);
     }
 
-    std::vector<Move> getMoves(Coordinate c)
+    std::vector<Move> getMoves(Coordinate origin)
     {
         std::vector<Move> pieceMoves {};
-        auto& currentPiece = getPiece(c);
+        auto& currentPiece = getPiece(origin);
         if (!currentPiece)
         {
             // std::cout << "\nNO PIECE ";
@@ -93,55 +93,55 @@ public:
         {
             if (NORMAL == currentPiece->rank)
             {
-                addNormalMoves(pieceMoves, c.getTopRight(), currentPiece->color);
-                addNormalMoves(pieceMoves, c.getTopLeft(), currentPiece->color);
+                addNormalMoves(pieceMoves, origin, origin.getTopRight(), currentPiece->color);
+                addNormalMoves(pieceMoves, origin, origin.getTopLeft(), currentPiece->color);
             }
         }
         else
         {
             if (NORMAL == currentPiece->rank)
             {
-                addNormalMoves(pieceMoves, c.getBottomRight(), currentPiece->color);
-                addNormalMoves(pieceMoves, c.getBottomLeft(), currentPiece->color);
+                addNormalMoves(pieceMoves, origin, origin.getBottomRight(), currentPiece->color);
+                addNormalMoves(pieceMoves, origin, origin.getBottomLeft(), currentPiece->color);
             }
         }
 
         return pieceMoves;
     }
 
-    void addNormalMoves(std::vector<Move>& pieceMoves, Coordinate c, Color color)
+    void addNormalMoves(std::vector<Move>& pieceMoves, Coordinate origin, Coordinate c, Color color)
     {
         if (c.isValid()) // check if not out of bounds
         {
             auto& targetPiece = getPiece(c);
             if (!targetPiece) // add if empty tile
             {
-                pieceMoves.push_back(Move(c, c));
+                pieceMoves.push_back(Move(origin, c));
             }
 
             if (targetPiece && color != targetPiece->color) // enemy color
             {
                 if (TOP_LEFT == c.dir)
                 {
-                    auto move = Move(c, c.getTopLeft());
+                    auto move = Move(origin, c.getTopLeft());
                     pieceMoves.push_back(Move(c, c));
                 }
 
                 if (TOP_RIGHT == c.dir)
                 {
-                    auto move = Move(c, c.getTopRight());
+                    auto move = Move(origin, c.getTopRight());
                     pieceMoves.push_back(Move(c, c));
                 }
 
                 if (BOTTOM_RIGHT == c.dir)
                 {
-                    auto move = Move(c, c.getBottomRight());
+                    auto move = Move(origin, c.getBottomRight());
                     pieceMoves.push_back(Move(c, c));
                 }
 
                 if (BOTTOM_LEFT == c.dir)
                 {
-                    auto move = Move(c, c.getBottomLeft());
+                    auto move = Move(origin, c.getBottomLeft());
                     pieceMoves.push_back(Move(c, c));
                 }
             }
