@@ -85,19 +85,18 @@ public:
         auto& currentPiece = getPiece(c);
         if (!currentPiece)
         {
-            // std::cout << "\n\nNO PIECE";
+            // std::cout << "\nNO PIECE ";
             return pieceMoves;
         }
-
+        std::cout << "\n";
         if (WHITE == currentPiece->color)
         {
             // std::cout << "\nWHITE PIECE ";
             if (NORMAL == currentPiece->rank)
             {
                 // std::cout << "NORMAL PIECE";
-                std::cout << "\n";
-                auto right = Coordinate(c.x + 1, c.y - 1);
-                if (right.x < 8 && right.y > -1)
+                auto right = c.getTopRight();
+                if (right.isValid()) // check if not out of bounds
                 {
                     if (!getPiece(right)) // add if empty tile
                     {
@@ -106,8 +105,8 @@ public:
                     }
                 }
 
-                auto left = Coordinate(c.x - 1, c.y - 1);
-                if (left.x > -1 && left.y > -1)
+                auto left = c.getTopLeft();
+                if (left.isValid())
                 {
                     if (!getPiece(left))
                     {
@@ -119,9 +118,30 @@ public:
         }
         else
         {
-            // std::cout << "\nBLACK PIECE";
-        }
+            // std::cout << "\nBLACK PIECE ";
+            if (NORMAL == currentPiece->rank)
+            {
+                auto right = c.getBottomRight();
+                if (right.isValid())
+                {
+                    if (!getPiece(right)) // add if empty tile
+                    {
+                        pieceMoves.push_back(Move(c, right));
+                        // std::cout << "RIGHT: " << right.x << " " << right.y << " ";
+                    }
+                }
 
+                auto left = c.getBottomLeft();
+                if (left.isValid())
+                {
+                    if (!getPiece(left))
+                    {
+                        pieceMoves.push_back(Move(c, left));
+                        // std::cout << "LEFT: " << left.x << " " << left.y;
+                    }
+                }
+            }
+        }
 
         return pieceMoves;
     }
